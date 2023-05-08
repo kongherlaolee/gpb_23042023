@@ -39,6 +39,10 @@ class DrinkApiController extends Controller
                 $error = $validator->errors()->all()[0];
                 return response()->json(['status' => 'false', 'message' => $error, 'data' => []], 422);
             } else {
+                    if($request->buy_price > $request->sale_price){
+                        return response()->json(['message' => 'ລາຄາຊື້ຕ້ອງໜ້ອຍກວ່າລາຄາຂາຍ!'], 422);
+                        return;
+                    }
                     $data = new Drink();
                     $data->name  = $request->name;
                     $data->buy_price  = $request->buy_price;
@@ -57,6 +61,10 @@ class DrinkApiController extends Controller
     }
     public function update(Request $request)
     {
+        if($request->buy_price > $request->sale_price){
+            return response()->json(['message' => 'ລາຄາຊື້ຕ້ອງໜ້ອຍກວ່າລາຄາຂາຍ!'], 422);
+            return;
+        }
         try{
                 $data = Drink::find($request->id);
                 if(!$data){

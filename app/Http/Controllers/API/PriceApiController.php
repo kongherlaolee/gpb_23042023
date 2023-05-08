@@ -19,11 +19,14 @@ class PriceApiController extends Controller
     {
         try {
                 $validator = Validator::make($request->all(), [
-                    'time_id' => 'required|unique:prices',
-                    'price_court1' => 'required',
-                    'price_court2' => 'required',
-                    'court1' => 'required',
-                    'court2' => 'required',
+                    'time' => 'required|unique:prices',
+                    'price' => 'required|numeric',
+                    'stadium_id' => 'required',
+               ],[
+                 'time.required' => 'ໃສ່ເວລາກ່ອນ',
+                 'time.unique' => 'ເວລານີ້ມີໃນລະບົບແລ້ວ',
+                 'price.required' => 'ໃສ່ລາຄາກ່ອນ',
+                 'stadium_id.required' => 'ເລືອກເດີ່ນກ່ອນ',
                ]);
 
             if ($validator->fails()) {
@@ -31,11 +34,9 @@ class PriceApiController extends Controller
                 return response()->json(['status' => 'false', 'message' => $error, 'data' => []], 422);
             } else {
                     $data = new Price();
-                    $data->time_id  = $request->time_id;
-                    $data->price_court1  = $request->price_court1;
-                    $data->price_court2  = $request->price_court2;
-                    $data->court1  = $request->court1;
-                    $data->court2  = $request->court2;
+                    $data->time  = $request->time;
+                    $data->price  = $request->price;
+                    $data->stadium_id  = $request->stadium_id;
                     $data->save();
                 return response()->json(['status' => 'true', 'message' => "ບັນທຶກຂໍ້ມູນສໍາເລັດແລ້ວ", 'data' => $data], 200);
             }
@@ -52,11 +53,9 @@ class PriceApiController extends Controller
                     'data' => 'ຂໍ້ມູນນີ້ບໍ່ມີໃນລະບົບ!'
                    ], 405);
                 }
-                $data->time_id  = $request->time_id;
-                $data->price_court1  = $request->price_court1;
-                $data->price_court2  = $request->price_court2;
-                $data->court1  = $request->court1;
-                $data->court2  = $request->court2;
+                $data->time  = $request->time;
+                $data->price  = $request->price;
+                $data->stadium_id  = $request->stadium_id;
                 $data->update();
                     return response()->json(['status' => 'true', 'message' => "ແກ້ໄຂຂໍ້ມູນສໍາເລັດແລ້ວ", 'data' => $data], 200);
         } catch (\Exception $e) {

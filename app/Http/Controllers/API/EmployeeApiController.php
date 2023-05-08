@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +11,7 @@ class EmployeeApiController extends Controller
 {
     public function get(){
         return response([
-            'data' => Employee::where('status', 1)->get()
+            'data' => Employee::get()
         ],200);
     }
     public function add(Request $request)
@@ -21,16 +20,16 @@ class EmployeeApiController extends Controller
                 $validator = Validator::make($request->all(), [
                     'fullname' => 'required',
                     'gender' => 'required',
-                    'tel' => 'required|unique:employees',
+                    'phone' => 'required|unique:employees',
                     'address' => 'required',
                     'password' => 'required'
             ], [
                     'fullname.required' => 'ໃສ່ຊື່ກ່ອນ!',
                     'gender.required' => 'ເລືອກເພດກ່ອນ!',
-                    'tel.required' => 'ໃສ່ເບີໂທກ່ອນ',
+                    'phone.required' => 'ໃສ່ເບີໂທກ່ອນ',
                     'address.required' => 'ໃສ່ທີ່ຢຸ່ກ່ອນ',
                     'password.required' => 'ໃສ່ລະຫັດຜ່ານກ່ອນ',
-                    'tel.unique' => 'ເບີ້ນີ້ມີໃນລະບົບແລ້ວ',
+                    'phone.unique' => 'ເບີ້ນີ້ມີໃນລະບົບແລ້ວ',
                 ]);
 
             if ($validator->fails()) {
@@ -40,10 +39,11 @@ class EmployeeApiController extends Controller
                     $data = new Employee();
                     $data->fullname  = $request->fullname;
                     $data->gender  = $request->gender;
-                    $data->tel  = $request->tel;
+                    $data->phone  = $request->phone;
                     $data->email  = $request->email;
                     $data->address  = $request->address;
                     $data->password =  bcrypt($request->password);
+                    $data->role = $request->role;
                     $data->save();
                 return response()->json(['status' => 'true', 'message' => "ບັນທຶກຂໍ້ມູນສໍາເລັດແລ້ວ", 'data' => $data], 200);
             }
@@ -62,16 +62,17 @@ class EmployeeApiController extends Controller
                 }
                 $data->fullname  = $request->fullname;
                 $data->gender  = $request->gender;
-                $data->tel  = $request->tel;
+                $data->phone  = $request->phone;
                 $data->email  = $request->email;
                 $data->address  = $request->address;
                 if(!empty($request->password)){
                     $data->password =  bcrypt($request->password);
                 }
+                $data->role = $request->role;
                 $data->update();
                     return response()->json(['status' => 'true', 'message' => "ແກ້ໄຂຂໍ້ມູນສໍາເລັດແລ້ວ", 'data' => $data], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'false', 'message' => $request->all(), 'data' => []], 500);
+            return response()->json(['status' => 'false', 'message' => $e->getMessage(), 'data' => []], 500);
         }
     }
     public function delete($id)
@@ -80,7 +81,7 @@ class EmployeeApiController extends Controller
             $data = Employee::find($id);
             if(!$data){
                 return response([
-                 'data' => 'ຂໍ້ມູນນີ້ບໍ່ມີໃນລະບົບ!'
+                 'data' => 'ລະຫັດນີ້ບໍ່ມີໃນລະບົບ!'
                 ], 405);
              }
              $data->status = 0;
@@ -94,10 +95,10 @@ class EmployeeApiController extends Controller
     {
             try {
                 $validator = Validator::make($request->all(), [
-                    'tel' => 'required',
+                    'phone' => 'required',
                     'password' => 'required|min:6'
             ], [
-                'tel.required' => 'ໃສ່ເບີ້ໂທລະສັບກ່ອນ!',
+                'phone.required' => 'ໃສ່ເບີ້ໂທລະສັບກ່ອນ!',
                 'password.required' => 'ໃສ່ລະຫັດຜ່ານກ່ອນ!',
                 ]);
             if ($validator->fails()) {
@@ -133,7 +134,7 @@ class EmployeeApiController extends Controller
     public function logout() 
     {
         $user = auth()->user();
-        if ($user instanceof User) {
+        if ($user instanceof Employee) {
             $user->tokens()->delete();
         }
         return response([

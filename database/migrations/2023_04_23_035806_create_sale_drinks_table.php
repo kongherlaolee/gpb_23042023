@@ -13,12 +13,11 @@ class CreateSaleDrinksTable extends Migration
      */
     public function up()
     {
-        Schema::create('sale__drinks', function (Blueprint $table) {
+        Schema::create('sale_drinks', function (Blueprint $table) {
             $table->biginteger('order_id')->autoIncrement();
             $table->unsignedBigInteger('emp_id');
             $table->string('receive_name',50);
-            $table->float('tatol');
-            $table->integer('order_status')->default(1);
+            $table->decimal('tatol');
             $table->timestamps();
             $table->foreign('emp_id')
             ->references('id')

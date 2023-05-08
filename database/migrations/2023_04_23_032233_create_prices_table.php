@@ -15,15 +15,13 @@ class CreatePricesTable extends Migration
     {
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('time_id');
-            $table->float('price_court1');
-            $table->float('price_court2');
-            $table->integer('court1');
-            $table->integer('court2');
+            $table->string('time', 100);
+            $table->decimal('price');
+            $table->unsignedBigInteger('stadium_id');
             $table->timestamps();
-            $table->foreign('time_id')
+            $table->foreign('stadium_id')
             ->references('id')
-            ->on('times')
+            ->on('stadiums')
             ->onDelete('CASCADE');
         });
     }

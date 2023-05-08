@@ -19,7 +19,7 @@ class CreateDrinksTable extends Migration
             $table->float('buy_price');
             $table->float('sale_price');
             $table->integer('qty');
-            $table->string('unit', 10);
+            $table->string('unit', 30);
             $table->text('image');
             $table->timestamps();
         });

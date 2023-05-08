@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Court extends Model
+class SaleDrink extends Model
 {
     use HasFactory;
     protected $fillable =[
-        'id',
-        'court_num',
-        'court_detail',
+        'order_id',
+        'emp_id',
+        'receive_name',
+        'total',
     ];
+    protected $primaryKey = 'order_id';
 }

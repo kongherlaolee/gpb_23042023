@@ -10,10 +10,8 @@ class Price extends Model
     use HasFactory;
     protected $fillable =[
         'id',
-        'time_id',
-        'price_court1',
-        'price_court2',
-        'court1',
-        'court2',
+        'time',
+        'price',
+        'stadium_id',
     ];
 }

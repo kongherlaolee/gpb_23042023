@@ -15,15 +15,26 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->string('username', 30);
-            $table->integer('court_num');
+            $table->unsignedBigInteger('cus_id');
             $table->date('date_booking');
-            $table->string('time_booking', 30);
-            $table->float('price_court');
-            $table->float('price_bcel');
-            $table->integer('status')->default(1);
+            $table->unsignedBigInteger('price_id');
+            $table->decimal('total');
+            $table->string('status'. 30)->default('booking');
             $table->text('slip_payment');
+            $table->unsignedBigInteger('emp_id')->nullable();
             $table->timestamps();
+            $table->foreign('emp_id')
+            ->references('id')
+            ->on('employees')
+            ->onDelete('CASCADE');
+            $table->foreign('price_id')
+            ->references('id')
+            ->on('prices')
+            ->onDelete('CASCADE');
+            $table->foreign('cus_id')
+            ->references('id')
+            ->on('customers')
+            ->onDelete('CASCADE');
         });
     }
 

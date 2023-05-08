@@ -9,12 +9,10 @@ class Booking extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'username', 30,
-        'court_num',
+        'cus_id', 30,
+        'price_id',
         'date_booking',
-        'time_booking', 30,
-        'price_court',
-        'price_bcel',
+        'total',
         'status',
         'slip_payment',
     ];

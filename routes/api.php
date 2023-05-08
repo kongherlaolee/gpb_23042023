@@ -29,19 +29,13 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('get_customer',[App\Http\Controllers\API\CustomerApiController::class, 'get']);
     Route::put('update_customer/{id}',[App\Http\Controllers\API\CustomerApiController::class, 'update']);
     Route::delete('delete_customer/{id}',[App\Http\Controllers\API\CustomerApiController::class, 'delete']);
-    //times
-    Route::get('get_time_by_id/{id}', [App\Http\Controllers\API\TimeApiController::class, 'get_by_id']);
-    Route::post('add_time',[App\Http\Controllers\API\TimeApiController::class, 'add']);
-    Route::get('get_time',[App\Http\Controllers\API\TimeApiController::class, 'get']);
-    Route::put('update_time/{id}',[App\Http\Controllers\API\TimeApiController::class, 'update']);
-    Route::delete('delete_time/{id}',[App\Http\Controllers\API\TimeApiController::class, 'delete']);
 
-    //court
-    Route::get('get_court_by_id/{id}', [App\Http\Controllers\API\CourtApiController::class, 'get_by_id']);
-    Route::post('add_court',[App\Http\Controllers\API\CourtApiController::class, 'add']);
-    Route::get('get_court',[App\Http\Controllers\API\CourtApiController::class, 'get']);
-    Route::put('update_court/{id}',[App\Http\Controllers\API\CourtApiController::class, 'update']);
-    Route::delete('delete_court/{id}',[App\Http\Controllers\API\CourtApiController::class, 'delete']);
+    //stadium
+    Route::get('get_stadium_by_id/{id}', [App\Http\Controllers\API\StadiumApiController::class, 'get_by_id']);
+    Route::post('add_stadium',[App\Http\Controllers\API\StadiumApiController::class, 'add']);
+    Route::get('get_stadium',[App\Http\Controllers\API\StadiumApiController::class, 'get']);
+    Route::put('update_stadium/{id}',[App\Http\Controllers\API\StadiumApiController::class, 'update']);
+    Route::delete('delete_stadium/{id}',[App\Http\Controllers\API\StadiumApiController::class, 'delete']);
 
     //drinks
     Route::get('get_drink_by_id/{id}', [App\Http\Controllers\API\DrinkApiController::class, 'get_by_id']);
@@ -55,6 +49,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
      Route::get('get_price',[App\Http\Controllers\API\PriceApiController::class, 'get']);
      Route::put('update_price/{id}',[App\Http\Controllers\API\PriceApiController::class, 'update']);
      Route::delete('delete_price/{id}',[App\Http\Controllers\API\PriceApiController::class, 'delete']);
+
 });
 //login employee
 Route::post('login', [App\Http\Controllers\API\EmployeeApiController::class, 'login']);

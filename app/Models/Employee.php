@@ -19,6 +19,5 @@ class Employee extends Authenticatable
         'address',
         'email',
         'password',
-        'status',
     ];
 }

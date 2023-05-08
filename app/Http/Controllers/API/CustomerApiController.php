@@ -1,13 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
 class CustomerApiController extends Controller
 {
     public function get(){
@@ -19,18 +17,16 @@ class CustomerApiController extends Controller
     {
         try {
                 $validator = Validator::make($request->all(), [
-                    'name' => 'required',
-                    'username' => 'required',
-                    'tel' => 'required|unique:customers',
+                    'fullname' => 'required',
+                    'phone' => 'required|unique:customers',
                     'address' => 'required',
                     'password' => 'required'
             ], [
-                    'name.required' => 'ໃສ່ຊື່ກ່ອນ!',
-                    'username.required' => 'ໃສ່ຊື່ຜູ້ໃຊ້ກ່ອນ!',
-                    'tel.required' => 'ໃສ່ເບີໂທກ່ອນ',
+                    'fullname.required' => 'ໃສ່ຊື່ກ່ອນ!',
+                    'phone.required' => 'ໃສ່ເບີໂທກ່ອນ',
                     'address.required' => 'ໃສ່ທີ່ຢຸ່ກ່ອນ',
                     'password.required' => 'ໃສ່ລະຫັດຜ່ານກ່ອນ',
-                    'tel.unique' => 'ເບີ້ນີ້ມີໃນລະບົບແລ້ວ',
+                    'phone.unique' => 'ເບີ້ນີ້ມີໃນລະບົບແລ້ວ',
                 ]);
 
             if ($validator->fails()) {
@@ -38,11 +34,11 @@ class CustomerApiController extends Controller
                 return response()->json(['status' => 'false', 'message' => $error, 'data' => []], 422);
             } else {
                     $data = new Customer();
-                    $data->name  = $request->name;
-                    $data->username  = $request->username;
-                    $data->tel  = $request->tel;
+                    $data->fullname  = $request->fullname;
+                    $data->phone  = $request->phone;
                     $data->address  = $request->address;
                     $data->password =  bcrypt($request->password);
+                    $data->email = $request->email;
                     $data->save();
                 return response()->json(['status' => 'true', 'message' => "ບັນທຶກຂໍ້ມູນສໍາເລັດແລ້ວ", 'data' => $data], 200);
             }
@@ -59,10 +55,10 @@ class CustomerApiController extends Controller
                     'data' => 'ຂໍ້ມູນນີ້ບໍ່ມີໃນລະບົບ!'
                    ], 405);
                 }
-                $data->name  = $request->name;
-                $data->username  = $request->username;
-                $data->tel  = $request->tel;
+                $data->fullname  = $request->fullname;
+                $data->phone  = $request->phone;
                 $data->address  = $request->address;
+                $data->email = $request->email;
                 if(!empty($request->password)){
                     $data->password =  bcrypt($request->password);
                 }
@@ -91,10 +87,10 @@ class CustomerApiController extends Controller
     {
             try {
                 $validator = Validator::make($request->all(), [
-                    'username' => 'required',
+                    'phone' => 'required',
                     'password' => 'required|min:6'
             ], [
-                'username.required' => 'ໃສ່ຊື່ຜູ້ໃຊ້ກ່ອນ!',
+                'phone.required' => 'ໃສ່ເບີໂທກ່ອນ!',
                 'password.required' => 'ໃສ່ລະຫັດຜ່ານກ່ອນ!',
                 ]);
             if ($validator->fails()) {
@@ -130,7 +126,7 @@ class CustomerApiController extends Controller
     public function logout() 
     {
         $user = auth()->user();
-        if ($user instanceof User) {
+        if ($user instanceof Customer) {
             $user->tokens()->delete();
         }
         return response([
