@@ -17,7 +17,7 @@ class CreateSaleDrinksTable extends Migration
             $table->biginteger('order_id')->autoIncrement();
             $table->unsignedBigInteger('emp_id');
             $table->string('receive_name',50);
-            $table->decimal('tatol');
+            $table->float('total');
             $table->timestamps();
             $table->foreign('emp_id')
             ->references('id')

@@ -34,7 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('get_stadium_by_id/{id}', [App\Http\Controllers\API\StadiumApiController::class, 'get_by_id']);
     Route::post('add_stadium',[App\Http\Controllers\API\StadiumApiController::class, 'add']);
     Route::get('get_stadium',[App\Http\Controllers\API\StadiumApiController::class, 'get']);
-    Route::put('update_stadium/{id}',[App\Http\Controllers\API\StadiumApiController::class, 'update']);
+    Route::post('update_stadium',[App\Http\Controllers\API\StadiumApiController::class, 'update']);
     Route::delete('delete_stadium/{id}',[App\Http\Controllers\API\StadiumApiController::class, 'delete']);
 
     //drinks
@@ -49,6 +49,10 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
      Route::get('get_price',[App\Http\Controllers\API\PriceApiController::class, 'get']);
      Route::put('update_price/{id}',[App\Http\Controllers\API\PriceApiController::class, 'update']);
      Route::delete('delete_price/{id}',[App\Http\Controllers\API\PriceApiController::class, 'delete']);
+     //sale drinks 
+     Route::post('sale_drink',[App\Http\Controllers\API\SaleApiController::class, 'sale_drink']);
+     //booking
+     Route::post('booking',[App\Http\Controllers\API\BookingApiController::class, 'booking']);
 
 });
 //login employee
@@ -56,3 +60,8 @@ Route::post('login', [App\Http\Controllers\API\EmployeeApiController::class, 'lo
 //customer
 Route::post('add_customer', [App\Http\Controllers\API\CustomerApiController::class, 'add']);
 Route::post('login_customer', [App\Http\Controllers\API\CustomerApiController::class, 'login']);
+Route::get('get_stadium_customer',[App\Http\Controllers\API\StadiumApiController::class, 'get_customer_stadium']);
+Route::get('get_stadium_customer_byId/{id}',[App\Http\Controllers\API\StadiumApiController::class, 'get_stadium_customer_byId']);
+Route::get('get_price_customer',[App\Http\Controllers\API\PriceApiController::class, 'get_price_customer']);
+Route::get('get_price_customer_by_id/{id}',[App\Http\Controllers\API\PriceApiController::class, 'get_price_customer_by_id']);
+

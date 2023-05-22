@@ -13,5 +13,6 @@ class Stadium extends Model
         'id',
         'number',
         'detail',
+        'image'
     ];
 }

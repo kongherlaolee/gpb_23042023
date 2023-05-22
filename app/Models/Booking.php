@@ -15,5 +15,6 @@ class Booking extends Model
         'total',
         'status',
         'slip_payment',
+        'pay_percent'
     ];
 }

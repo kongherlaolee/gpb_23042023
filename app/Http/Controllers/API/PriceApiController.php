@@ -15,16 +15,26 @@ class PriceApiController extends Controller
             'data' => Price::get()
         ],200);
     }
+    public function get_price_customer(){
+        return response([
+            'data' => Price::select('prices.*', 'sd.number','sd.detail')->join('stadiums as sd', 'sd.id', '=', 'prices.stadium_id')->get()
+        ],200);
+    }
+    public function get_price_customer_by_id($id){
+        return response([
+            'data' => Price::where('stadium_id', $id)->get()
+        ],200);
+    }
     public function add(Request $request)
     {
         try {
                 $validator = Validator::make($request->all(), [
-                    'time' => 'required|unique:prices',
+                    'time' => 'required',
                     'price' => 'required|numeric',
                     'stadium_id' => 'required',
                ],[
                  'time.required' => 'ໃສ່ເວລາກ່ອນ',
-                 'time.unique' => 'ເວລານີ້ມີໃນລະບົບແລ້ວ',
+                //  'time.unique' => 'ເວລານີ້ມີໃນລະບົບແລ້ວ',
                  'price.required' => 'ໃສ່ລາຄາກ່ອນ',
                  'stadium_id.required' => 'ເລືອກເດີ່ນກ່ອນ',
                ]);
@@ -33,6 +43,13 @@ class PriceApiController extends Controller
                 $error = $validator->errors()->all()[0];
                 return response()->json(['status' => 'false', 'message' => $error, 'data' => []], 422);
             } else {
+                    $check = Price::where('time', $request->time)->where('stadium_id', $request->stadium_id)->first();
+                    if($check){
+                        return response()->json([
+                            'message' => 'ເວລາຕໍາກັນ'
+                        ], 422);
+                        return;
+                    }
                     $data = new Price();
                     $data->time  = $request->time;
                     $data->price  = $request->price;
