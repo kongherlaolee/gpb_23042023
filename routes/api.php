@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 //login employee
 Route::post('login', [App\Http\Controllers\API\EmployeeApiController::class, 'login']);
 //customer
-Route::post('add_customer', [App\Http\Controllers\API\CustomerApiController::class, 'add']);
+Route::post('register_customer', [App\Http\Controllers\API\CustomerApiController::class, 'add']);
 Route::post('login_customer', [App\Http\Controllers\API\CustomerApiController::class, 'login']);
 Route::get('get_stadium_customer',[App\Http\Controllers\API\StadiumApiController::class, 'get_customer_stadium']);
 Route::get('get_stadium_customer_byId/{id}',[App\Http\Controllers\API\StadiumApiController::class, 'get_stadium_customer_byId']);

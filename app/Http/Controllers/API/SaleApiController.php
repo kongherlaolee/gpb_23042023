@@ -16,8 +16,10 @@ class SaleApiController extends Controller
     {
         try {
             $sale = new SaleDrink();
-            $sale->emp_id = 1;
-            $sale->receive_name = $request->receive_name;
+            $sale->emp_id = auth()->user()->id;
+            if($request->receive_name){
+               $sale->receive_name = $request->receive_name;
+            }
             $sale->total = $request->total;
             $sale->save();
             $items = $request->input('items');
