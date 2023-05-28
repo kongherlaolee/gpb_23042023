@@ -12,6 +12,8 @@ class SaleDrink extends Model
         'order_id',
         'emp_id',
         'receive_name',
+        'recieve_money',
+        'change',
         'total',
     ];
     protected $primaryKey = 'order_id';

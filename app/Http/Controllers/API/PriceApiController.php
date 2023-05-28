@@ -22,7 +22,7 @@ class PriceApiController extends Controller
     }
     public function get_price_customer_by_id($id){
         return response([
-            'data' => Price::where('stadium_id', $id)->get()
+            'data' => Price::select('prices.*', 'sd.number as number')->join('stadiums as sd', 'sd.id', '=', 'prices.stadium_id')->where('stadium_id', $id)->get()
         ],200);
     }
     public function add(Request $request)

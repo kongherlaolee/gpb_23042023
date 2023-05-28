@@ -21,6 +21,8 @@ class SaleApiController extends Controller
                $sale->receive_name = $request->receive_name;
             }
             $sale->total = $request->total;
+            $sale->recieve_money = $request->recieve_money;
+            $sale->change = $request->change;
             $sale->save();
             $items = $request->input('items');
             if (is_array($items)) {

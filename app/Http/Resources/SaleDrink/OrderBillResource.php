@@ -20,6 +20,8 @@ class OrderBillResource extends JsonResource
            'id' => $this->order_id,
            'receive_name' => $this->receive_name,
            'total' => $this->total,
+           'receive_money' => $this->receive_money,
+           'change' => $this->change,
            'emp_id' => $this->emp_id,
            'created_at' => $this->created_at,
            'employee' => Employee::find($this->emp_id),
