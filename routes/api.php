@@ -51,10 +51,15 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
      Route::delete('delete_price/{id}',[App\Http\Controllers\API\PriceApiController::class, 'delete']);
      //sale drinks 
      Route::post('sale_drink',[App\Http\Controllers\API\SaleApiController::class, 'sale_drink']);
+     Route::get('report_sale_drinks',[App\Http\Controllers\API\SaleApiController::class, 'report_sale_drinks']);
      //booking
      Route::post('booking',[App\Http\Controllers\API\BookingApiController::class, 'booking']);
-
+     Route::get('get_all_bookings',[App\Http\Controllers\API\BookingApiController::class, 'get_all_bookings']);
+     Route::put('confirm_booking/{id}',[App\Http\Controllers\API\BookingApiController::class, 'confirm_booking']);
+     Route::put('cancel_booking/{id}',[App\Http\Controllers\API\BookingApiController::class, 'cancel_booking']);
+     Route::get('report_bookings',[App\Http\Controllers\API\BookingApiController::class, 'report_bookings']);
 });
+Route::get('get_bookings/{date}',[App\Http\Controllers\API\BookingApiController::class, 'get_bookings']);
 //login employee
 Route::post('login', [App\Http\Controllers\API\EmployeeApiController::class, 'login']);
 //customer

@@ -11,7 +11,7 @@ class EmployeeApiController extends Controller
 {
     public function get(){
         return response([
-            'data' => Employee::get()
+            'data' => Employee::orderBy('id', 'desc')->get()
         ],200);
     }
     public function add(Request $request)

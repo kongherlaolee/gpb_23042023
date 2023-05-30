@@ -48,4 +48,7 @@ class SaleApiController extends Controller
             ], 500);
         }
     }
+    public function report_sale_drinks(){
+        return response(['data' => OrderBillResource::collection(SaleDrink::get())], 200);
+    }
 }

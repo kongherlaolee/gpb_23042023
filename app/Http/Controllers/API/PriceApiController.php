@@ -12,7 +12,7 @@ class PriceApiController extends Controller
 {
     public function get(){
         return response([
-            'data' => Price::get()
+            'data' => Price::orderBy('id', 'desc')->get()
         ],200);
     }
     public function get_price_customer(){

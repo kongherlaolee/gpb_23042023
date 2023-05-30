@@ -15,7 +15,7 @@ class DrinkApiController extends Controller
     public function get()
     {
         return response([
-            'data' => Drink::get()
+            'data' => Drink::orderBy('id', 'desc')->get()
         ], 200);
     }
     public function add(Request $request)
@@ -80,10 +80,6 @@ class DrinkApiController extends Controller
             $data->qty  = $request->qty;
             $data->unit = $request->unit;
             if ($request->image) {
-                if (file_exists($data->image)) {
-                    unlink($data->image);
-                    $data->delete();
-                }
                 $imageName = Carbon::now()->timestamp . '.' . $request->image->extension();
                 $request->image->storeAs('upload/drink', $imageName);
                 $data->image = "upload/drink/$imageName";
@@ -102,10 +98,6 @@ class DrinkApiController extends Controller
                 return response([
                     'data' => 'ຂໍ້ມູນນີ້ບໍ່ມີໃນລະບົບ!'
                 ], 405);
-            }
-            if (file_exists($data->image)) {
-                unlink($data->image);
-                $data->delete();
             }
             $data->delete();
             return response()->json(['status' => 'true', 'message' => "ລຶບຂໍ້ມູນສໍາເລັດແລ້ວ", 'data' => $data], 200);

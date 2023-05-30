@@ -15,13 +15,13 @@ class StadiumApiController extends Controller
     public function get()
     {
         return response([
-            'data' => Stadium::get()
+            'data' => Stadium::orderBy('id', 'desc')->get()
         ], 200);
     }
     public function get_customer_stadium()
     {
         return response([
-            'data' => Stadium::get()
+            'data' => Stadium::orderBy('id', 'desc')->get()
         ], 200);
     }
     public function get_stadium_customer_byId($id)
@@ -73,10 +73,6 @@ class StadiumApiController extends Controller
             $data->number  = $request->number;
             $data->detail  = $request->detail;
             if ($request->image) {
-                if (file_exists($data->image)) {
-                    unlink($data->image);
-                    $data->delete();
-                }
                 $imageName = Carbon::now()->timestamp . '.' . $request->image->extension();
                 $request->image->storeAs('upload/stadium', $imageName);
                 $data->image = "upload/stadium/$imageName";
