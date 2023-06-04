@@ -46,7 +46,7 @@ class BookingApiController extends Controller
     }
     public function get_bookings($date)
     {
-        return response()->json(['data' => Booking::where('status', 'booking')->whereDate('date_booking', $date)->get()], 200);
+        return response()->json(['data' => Booking::where('status', '!=', 'cancel')->whereDate('date_booking', $date)->get()], 200);
     }
     public function get_all_bookings()
     {
