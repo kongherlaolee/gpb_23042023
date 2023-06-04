@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SaleDrink\OrderBillResource;
+use App\Models\Drink;
 use App\Models\SaleDrink;
 use App\Models\SaleDrinkDetail;
 use Exception;
@@ -27,6 +28,11 @@ class SaleApiController extends Controller
             $items = $request->input('items');
             if (is_array($items)) {
                 foreach($items as $item) {
+                    $check_stock = Drink::find($item['d_id']);
+                    if($check_stock){
+                        $check_stock->qty = $check_stock->qty - $item['qty'];
+                        $check_stock->update();
+                    }
                     $data = new SaleDrinkDetail();
                     $data->order_id = $sale->order_id;
                     $data->d_id  = $item['d_id'];
@@ -49,6 +55,6 @@ class SaleApiController extends Controller
         }
     }
     public function report_sale_drinks(){
-        return response(['data' => OrderBillResource::collection(SaleDrink::get())], 200);
+        return response(['data' => SaleDrinkDetail::select('sale_drink_details.*','d.buy_price', 'd.name')->join('drinks as d','d.id', '=', 'sale_drink_details.d_id')->get()], 200);
     }
 }
