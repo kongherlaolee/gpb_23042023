@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use NunoMaduro\Collision\Adapters\Phpunit\State;
 
 class StadiumApiController extends Controller
 {
@@ -110,6 +111,18 @@ class StadiumApiController extends Controller
             return response()->json(['status' => 'true', 'data' => $data], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'false', 'message' => $e->getMessage(), 'data' => []], 500);
+        }
+    }
+    public function update_date_not_empty(Request $request, $id){
+        try{
+         $data = Stadium::find($id);
+         if($data){
+             $data->date_not_empty = $request->date_not_empty;
+             $data->update();
+             return response()->json(['message' => 'ແກ້ໄຂວັນທີບໍ່ຫວ່າງສໍາເລັດແລ້ວ'], 200);
+         }
+        }catch(\Exception $ex){
+            return response()->json(['message' =>  $ex->getMessage()], 500);
         }
     }
 }

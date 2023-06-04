@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('get_stadium',[App\Http\Controllers\API\StadiumApiController::class, 'get']);
     Route::post('update_stadium',[App\Http\Controllers\API\StadiumApiController::class, 'update']);
     Route::delete('delete_stadium/{id}',[App\Http\Controllers\API\StadiumApiController::class, 'delete']);
+    Route::put('update_date_not_empty/{id}', [App\Http\Controllers\API\StadiumApiController::class, 'update_date_not_empty']);
 
     //drinks
     Route::get('get_drink_by_id/{id}', [App\Http\Controllers\API\DrinkApiController::class, 'get_by_id']);
